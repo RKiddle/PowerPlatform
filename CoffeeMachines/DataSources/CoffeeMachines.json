@@ -1,0 +1,30 @@
+[
+  {
+    "ApiId": "/providers/microsoft.powerapps/apis/shared_excel",
+    "CdpRevision": {
+      "BaseUrl": "/",
+      "LastChangedTimeString": "2023-11-09T17:47:54.0690000Z",
+      "RevisionNumber": 1
+    },
+    "ConnectedDataSourceInfoNameMapping": {
+      "__PowerAppsId__": "Row id",
+      "Image": "Image",
+      "Machine_x0020_ID": "Machine ID",
+      "Machine_x0020_Name": "Machine Name",
+      "Machine_x0020_Price": "Machine Price",
+      "Primary_x0020_Color": "Primary Color",
+      "Product_x0020_Summary": "Product Summary",
+      "Product_x0020_Type_x0020_ID": "Product Type ID",
+      "Special_x0020_Feature": "Special Feature",
+      "Type": "Type",
+      "Week_x0020_Avg_x002e__x0020_Cups": "Week Avg. Cups",
+      "Week_x0020_Avg_x002e__x0020_Espressos": "Week Avg. Espressos"
+    },
+    "DatasetName": "b!3Dve1BMLs0-It5UmFJYK-vTDFh1fz8VAtnRtqhsrUNlBpcXfUVPeSqxtnemtTu_l.01M765BB3J5M4WN4HW7RCLFXJ5DKMILIKQ",
+    "EncodeDataset": true,
+    "IsSampleData": false,
+    "IsWritable": true,
+    "Name": "CoffeeMachines",
+    "Type": "ConnectedDataSourceInfo"
+  }
+]
