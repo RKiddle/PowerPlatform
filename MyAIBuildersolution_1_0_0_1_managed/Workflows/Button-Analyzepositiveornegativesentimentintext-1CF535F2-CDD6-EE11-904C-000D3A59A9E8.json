@@ -1,0 +1,121 @@
+{
+  "properties": {
+    "connectionReferences": {
+      "shared_commondataserviceforapps": {
+        "runtimeSource": "embedded",
+        "connection": {
+          "connectionReferenceLogicalName": "cr33a_sharedcommondataserviceforapps_89652"
+        },
+        "api": {
+          "name": "shared_commondataserviceforapps"
+        }
+      },
+      "shared_excelonlinebusiness": {
+        "runtimeSource": "invoker",
+        "connection": {
+          "connectionReferenceLogicalName": "cr33a_sharedexcelonlinebusiness_102eb"
+        },
+        "api": {
+          "name": "shared_excelonlinebusiness"
+        }
+      }
+    },
+    "definition": {
+      "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "$connections": {
+          "defaultValue": {},
+          "type": "Object"
+        },
+        "$authentication": {
+          "defaultValue": {},
+          "type": "SecureObject"
+        }
+      },
+      "triggers": {
+        "manual": {
+          "metadata": {
+            "operationMetadataId": "6f3d0f38-96c8-4d14-bbc0-64a8cf3152c2"
+          },
+          "type": "Request",
+          "kind": "Button",
+          "inputs": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "title": "My Text",
+                  "type": "string",
+                  "x-ms-dynamically-added": true,
+                  "description": "Please enter your input",
+                  "x-ms-content-hint": "TEXT"
+                }
+              },
+              "required": [
+                "text"
+              ]
+            }
+          }
+        }
+      },
+      "actions": {
+        "Analyze_positive_or_negative_sentiment_in_text": {
+          "runAfter": {},
+          "metadata": {
+            "operationMetadataId": "50382cba-d316-4021-b848-c01b5206d50b"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_commondataserviceforapps",
+              "operationId": "aibuilderpredict_sentimentanalysis",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps"
+            },
+            "parameters": {
+              "item/requestv2/language": "en",
+              "item/requestv2/text": "@triggerBody()['text']"
+            },
+            "authentication": {
+              "type": "Raw",
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+            }
+          }
+        },
+        "Add_a_row_into_a_table": {
+          "runAfter": {
+            "Analyze_positive_or_negative_sentiment_in_text": [
+              "Succeeded"
+            ]
+          },
+          "metadata": {
+            "01M765BB3CZDTKYPLG6FFY57KEXXHIEQZT": "/AI Builder results.xlsx",
+            "operationMetadataId": "da73bfed-cb2f-4538-a7af-307790bc29a4"
+          },
+          "type": "OpenApiConnection",
+          "inputs": {
+            "host": {
+              "connectionName": "shared_excelonlinebusiness",
+              "operationId": "AddRowV2",
+              "apiId": "/providers/Microsoft.PowerApps/apis/shared_excelonlinebusiness"
+            },
+            "parameters": {
+              "source": "me",
+              "drive": "b!3Dve1BMLs0-It5UmFJYK-vTDFh1fz8VAtnRtqhsrUNlBpcXfUVPeSqxtnemtTu_l",
+              "file": "01M765BB3CZDTKYPLG6FFY57KEXXHIEQZT",
+              "table": "{98D9F62C-1A9E-44F5-BEAE-2EEA2FC67F71}",
+              "item/Column1": "@triggerBody()['text']",
+              "item/Column 2": "@outputs('Analyze_positive_or_negative_sentiment_in_text')?['body/responsev2/predictionOutput/result/sentiment']"
+            },
+            "authentication": {
+              "type": "Raw",
+              "value": "@json(decodeBase64(triggerOutputs().headers['X-MS-APIM-Tokens']))['$ConnectionKey']"
+            }
+          }
+        }
+      }
+    },
+    "templateName": null
+  },
+  "schemaVersion": "1.0.0.0"
+}
