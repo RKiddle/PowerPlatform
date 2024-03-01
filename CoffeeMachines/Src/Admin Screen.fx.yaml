@@ -1,7 +1,10 @@
 "'Admin Screen' As screen":
-    Fill: =Color.LightCyan
+    Fill: =RGBA(242, 239, 223, 1)
+    LoadingSpinnerColor: =RGBA(30, 14, 91, 1)
 
     Rectangle2_2 As rectangle:
+        BorderColor: =RGBA(92, 74, 168, 1)
+        Fill: =nfBrandingDark 
         Height: =75
         Width: =1165
         X: =102
@@ -9,7 +12,9 @@
         ZIndex: =1
 
     Label1_2 As label:
+        BorderColor: =RGBA(92, 74, 168, 1)
         Color: =RGBA(255, 255, 255, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
         Height: =32
         Size: =24
         Text: ='Admin Screen'.Name
@@ -19,9 +24,39 @@
         ZIndex: =2
 
     Button4_1 As button:
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(166, 166, 166, 1)
+        DisabledFill: =RGBA(244, 244, 244, 1)
+        Fill: =nfBrandingLight
+        FontWeight: =FontWeight.Semibold
+        HoverColor: =RGBA(255, 255, 255, 1)
+        HoverFill: =ColorFade(RGBA(30, 14, 91, 1), -20%)
         OnSelect: =Back()
+        Size: =15
         Text: ="Back"
         X: =1145
         Y: =692
         ZIndex: =3
+
+    Icon1_1 As icon.BackArrow:
+        BorderColor: =RGBA(92, 74, 168, 1)
+        Color: =Color.White
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(244, 244, 244, 1)
+        Icon: =Icon.BackArrow
+        OnSelect: =Back()
+        X: =20
+        Y: =48
+        ZIndex: =4
+
+    Icon1_2 As icon.BackArrow:
+        BorderColor: =RGBA(92, 74, 168, 1)
+        Color: =Color.White
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(244, 244, 244, 1)
+        Icon: =Icon.Home
+        OnSelect: =Navigate('Home Screen')
+        X: =1285
+        Y: =38
+        ZIndex: =5
 
