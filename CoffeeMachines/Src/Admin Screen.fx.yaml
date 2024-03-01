@@ -38,3 +38,25 @@
         Y: =692
         ZIndex: =3
 
+    Icon1_1 As icon.BackArrow:
+        BorderColor: =RGBA(92, 74, 168, 1)
+        Color: =Color.White
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(244, 244, 244, 1)
+        Icon: =Icon.BackArrow
+        OnSelect: =Back()
+        X: =20
+        Y: =48
+        ZIndex: =4
+
+    Icon1_2 As icon.BackArrow:
+        BorderColor: =RGBA(92, 74, 168, 1)
+        Color: =Color.White
+        DisabledBorderColor: =RGBA(166, 166, 166, 1)
+        DisabledColor: =RGBA(244, 244, 244, 1)
+        Icon: =Icon.Home
+        OnSelect: =Navigate('Home Screen')
+        X: =1285
+        Y: =38
+        ZIndex: =5
+
