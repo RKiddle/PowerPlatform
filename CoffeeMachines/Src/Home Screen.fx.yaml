@@ -1,0 +1,38 @@
+"'Home Screen' As screen":
+    Fill: =Color.PaleGreen
+
+    Rectangle2_1 As rectangle:
+        Height: =75
+        Width: =1165
+        X: =102
+        Y: =37
+        ZIndex: =1
+
+    Label1_1 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =32
+        Size: =24
+        Text: ='Home Screen'.Name
+        Width: =1062
+        X: =160
+        Y: =54
+        ZIndex: =2
+
+    Button2 As button:
+        Height: =100
+        OnSelect: =Navigate('Catalog Screen')
+        Text: ="View Catalogue "
+        Width: =250
+        X: =518
+        Y: =218
+        ZIndex: =3
+
+    Button3 As button:
+        Height: =100
+        OnSelect: =Navigate('Admin Screen')
+        Text: ="Admin Screen"
+        Width: =250
+        X: =518
+        Y: =419
+        ZIndex: =4
+

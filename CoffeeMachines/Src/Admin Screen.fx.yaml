@@ -1,0 +1,27 @@
+"'Admin Screen' As screen":
+    Fill: =Color.LightCyan
+
+    Rectangle2_2 As rectangle:
+        Height: =75
+        Width: =1165
+        X: =102
+        Y: =37
+        ZIndex: =1
+
+    Label1_2 As label:
+        Color: =RGBA(255, 255, 255, 1)
+        Height: =32
+        Size: =24
+        Text: ='Admin Screen'.Name
+        Width: =1062
+        X: =160
+        Y: =54
+        ZIndex: =2
+
+    Button4_1 As button:
+        OnSelect: =Back()
+        Text: ="Back"
+        X: =1145
+        Y: =692
+        ZIndex: =3
+

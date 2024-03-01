@@ -1,27 +1,27 @@
-Screen1 As screen:
+"'Catalog Screen' As screen":
 
-    "Gallery1 As gallery.'BrowseLayout_Vertical_TwoTextOneImageVariant_ver5.0'":
+    "Gallery1 As gallery.'BrowseLayout_Vertical_ThreeTextOneImageVariant_ver5.0'":
         DelayItemLoading: =true
         Height: =556
         Items: =CoffeeMachines
         Layout: =Layout.Vertical
         LoadingSpinner: =LoadingSpinner.Data
         TemplatePadding: =0
-        TemplateSize: =104
+        TemplateSize: =116
         Width: =642
         X: =40
         Y: =176
         ZIndex: =1
 
         Image1 As image:
-            Height: =72
+            Height: =84
             Image: =ThisItem.Image
             OnSelect: =Select(Parent)
             RadiusBottomLeft: =8
             RadiusBottomRight: =8
             RadiusTopLeft: =8
             RadiusTopRight: =8
-            Width: =72
+            Width: =84
             X: =16
             Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
             ZIndex: =1
@@ -36,9 +36,9 @@ Screen1 As screen:
             PaddingTop: =0
             Text: =ThisItem.'Machine Name'
             VerticalAlign: =VerticalAlign.Top
-            Width: =Parent.TemplateWidth - 173
-            X: =103
-            Y: =(Parent.TemplateHeight - (Self.Size * 1.8 + Subtitle1.Size * 1.8)) / 2
+            Width: =Parent.TemplateWidth - 185
+            X: =115
+            Y: =(Parent.TemplateHeight - (Self.Size*1.8 + Subtitle1.Size*1.8 + 2 + Body1.Size*1.8)) / 2
             ZIndex: =2
 
         Subtitle1 As label:
@@ -49,12 +49,29 @@ Screen1 As screen:
             PaddingLeft: =0
             PaddingRight: =0
             PaddingTop: =0
-            Text: =ThisItem.'Machine Price'
+            Text: |-
+                =Text(Value(ThisItem.'Machine Price'), "$ ##.00")
             VerticalAlign: =VerticalAlign.Top
             Width: =Title1.Width
             X: =Title1.X
             Y: =Title1.Y + Title1.Height
             ZIndex: =3
+
+        Body1 As label:
+            Color: =ColorValue(ThisItem. 'Primary Color')
+            FontWeight: =If(ThisItem.IsSelected, FontWeight.Semibold, FontWeight.Normal)
+            Height: =Self.Size * 1.8
+            OnSelect: =Select(Parent)
+            PaddingBottom: =0
+            PaddingLeft: =0
+            PaddingRight: =0
+            PaddingTop: =0
+            Text: =ThisItem.Type
+            VerticalAlign: =VerticalAlign.Top
+            Width: =Subtitle1.Width
+            X: =Title1.X
+            Y: =Subtitle1.Y + Subtitle1.Height
+            ZIndex: =4
 
         NextArrow1 As icon.ChevronRight:
             AccessibleLabel: =Self.Tooltip
@@ -70,21 +87,21 @@ Screen1 As screen:
             Width: =50
             X: =Parent.TemplateWidth - Self.Width - 12
             Y: =(Parent.TemplateHeight / 2) - (Self.Height / 2)
-            ZIndex: =4
+            ZIndex: =5
 
         Separator1 As rectangle:
             Height: =8
             OnSelect: =Select(Parent)
             Width: =Parent.TemplateWidth
             Y: =Parent.TemplateHeight - Self.Height
-            ZIndex: =5
+            ZIndex: =6
 
         Rectangle1 As rectangle:
             Height: =Parent.TemplateHeight - Separator1.Height
             OnSelect: =Select(Parent)
             Visible: =ThisItem.IsSelected
             Width: =4
-            ZIndex: =6
+            ZIndex: =7
 
     Form1 As form:
         DataSource: =CoffeeMachines
@@ -94,6 +111,74 @@ Screen1 As screen:
         X: =772
         Y: =137
         ZIndex: =2
+
+        "'Product Summary_DataCard2' As typedDataCard.textualMultiLineEditCard":
+            BorderStyle: =BorderStyle.Solid
+            DataField: ="Product_x0020_Summary"
+            Default: =ThisItem.'Product Summary'
+            DisplayMode: =Parent.DisplayMode
+            DisplayName: =DataSourceInfo([@CoffeeMachines],DataSourceInfo.DisplayName,"Product_x0020_Summary")
+            Fill: =RGBA(0, 0, 0, 0)
+            Height: =171
+            Required: =false
+            Update: =DataCardValue1.Text
+            Width: =172
+            X: =1
+            Y: =1
+            ZIndex: =1
+
+            DataCardKey2 As label:
+                AutoHeight: =true
+                Height: =34
+                Text: =Parent.DisplayName
+                Width: =Parent.Width - 60
+                Wrap: =false
+                X: =30
+                Y: =10
+                ZIndex: =1
+
+            DataCardValue1 As text:
+                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
+                Default: =Parent.Default
+                DelayOutput: =true
+                DisplayMode: =Parent.DisplayMode
+                Height: =97
+                Mode: =TextMode.MultiLine
+                PaddingLeft: =5
+                RadiusBottomLeft: =0
+                RadiusBottomRight: =0
+                RadiusTopLeft: =0
+                RadiusTopRight: =0
+                Tooltip: =Parent.DisplayName
+                Width: =142
+                X: =15
+                Y: =44
+                ZIndex: =2
+
+            ErrorMessage2 As label:
+                AutoHeight: =true
+                Height: =10
+                Live: =Live.Assertive
+                PaddingBottom: =0
+                PaddingLeft: =0
+                PaddingRight: =0
+                PaddingTop: =0
+                Text: =Parent.Error
+                Visible: =Parent.DisplayMode=DisplayMode.Edit
+                Width: =Parent.Width - 60
+                X: =30
+                Y: =DataCardValue1.Y + DataCardValue1.Height
+                ZIndex: =3
+
+            StarVisible2 As label:
+                Align: =Align.Center
+                Height: =DataCardKey2.Height
+                Text: ="*"
+                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
+                Width: =30
+                Wrap: =false
+                Y: =DataCardKey2.Y
+                ZIndex: =4
 
         Image_DataCard1 As typedDataCard.addPictureCard:
             BorderStyle: =BorderStyle.Solid
@@ -163,73 +248,6 @@ Screen1 As screen:
                 Y: =DataCardKey1.Y
                 ZIndex: =5
 
-        "'Machine ID_DataCard1' As typedDataCard.numberEditCard":
-            BorderStyle: =BorderStyle.Solid
-            DataField: ="Machine_x0020_ID"
-            Default: =ThisItem.'Machine ID'
-            DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@CoffeeMachines],DataSourceInfo.DisplayName,"Machine_x0020_ID")
-            Fill: =RGBA(0, 0, 0, 0)
-            Height: =50
-            Required: =false
-            Update: =Value(DataCardValue1.Text)
-            Width: =172
-            X: =1
-            Y: =0
-            ZIndex: =1
-
-            DataCardKey2 As label:
-                AutoHeight: =true
-                Height: =34
-                Text: =Parent.DisplayName
-                Width: =Parent.Width - 60
-                Wrap: =false
-                X: =30
-                Y: =10
-                ZIndex: =1
-
-            DataCardValue1 As text:
-                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                Default: =Parent.Default
-                DelayOutput: =true
-                DisplayMode: =Parent.DisplayMode
-                Format: =TextFormat.Number
-                PaddingLeft: =5
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Tooltip: =Parent.DisplayName
-                Width: =Parent.Width - 60
-                X: =30
-                Y: =DataCardKey2.Y + DataCardKey2.Height + 5
-                ZIndex: =2
-
-            ErrorMessage2 As label:
-                AutoHeight: =true
-                Height: =10
-                Live: =Live.Assertive
-                PaddingBottom: =0
-                PaddingLeft: =0
-                PaddingRight: =0
-                PaddingTop: =0
-                Text: =Parent.Error
-                Visible: =Parent.DisplayMode=DisplayMode.Edit
-                Width: =Parent.Width - 60
-                X: =30
-                Y: =DataCardValue1.Y + DataCardValue1.Height
-                ZIndex: =3
-
-            StarVisible2 As label:
-                Align: =Align.Center
-                Height: =DataCardKey2.Height
-                Text: ="*"
-                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                Width: =30
-                Wrap: =false
-                Y: =DataCardKey2.Y
-                ZIndex: =4
-
         "'Machine Name_DataCard1' As typedDataCard.textualEditCard":
             BorderStyle: =BorderStyle.Solid
             DataField: ="Machine_x0020_Name"
@@ -242,7 +260,7 @@ Screen1 As screen:
             Required: =false
             Update: =DataCardValue2.Text
             Width: =172
-            X: =2
+            X: =1
             Y: =0
             ZIndex: =1
 
@@ -310,8 +328,8 @@ Screen1 As screen:
             Required: =false
             Update: =DataCardValue3.Text
             Width: =172
-            X: =0
-            Y: =1
+            X: =2
+            Y: =0
             ZIndex: =1
 
             DataCardKey4 As label:
@@ -378,7 +396,7 @@ Screen1 As screen:
             Required: =false
             Update: =DataCardValue4.Text
             Width: =172
-            X: =1
+            X: =0
             Y: =1
             ZIndex: =1
 
@@ -434,141 +452,6 @@ Screen1 As screen:
                 Y: =DataCardKey5.Y
                 ZIndex: =4
 
-        "'Product Summary_DataCard1' As typedDataCard.textualEditCard":
-            BorderStyle: =BorderStyle.Solid
-            DataField: ="Product_x0020_Summary"
-            Default: =ThisItem.'Product Summary'
-            DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@CoffeeMachines],DataSourceInfo.DisplayName,"Product_x0020_Summary")
-            Fill: =RGBA(0, 0, 0, 0)
-            Height: =50
-            MaxLength: =DataSourceInfo([@CoffeeMachines], DataSourceInfo.MaxLength, "Product_x0020_Summary")
-            Required: =false
-            Update: =DataCardValue5.Text
-            Width: =172
-            X: =2
-            Y: =1
-            ZIndex: =1
-
-            DataCardKey6 As label:
-                AutoHeight: =true
-                Height: =34
-                Text: =Parent.DisplayName
-                Width: =Parent.Width - 60
-                Wrap: =false
-                X: =30
-                Y: =10
-                ZIndex: =1
-
-            DataCardValue5 As text:
-                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                Default: =Parent.Default
-                DelayOutput: =true
-                DisplayMode: =Parent.DisplayMode
-                MaxLength: =Parent.MaxLength
-                PaddingLeft: =5
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Tooltip: =Parent.DisplayName
-                Width: =Parent.Width - 60
-                X: =30
-                Y: =DataCardKey6.Y + DataCardKey6.Height + 5
-                ZIndex: =2
-
-            ErrorMessage6 As label:
-                AutoHeight: =true
-                Height: =10
-                Live: =Live.Assertive
-                PaddingBottom: =0
-                PaddingLeft: =0
-                PaddingRight: =0
-                PaddingTop: =0
-                Text: =Parent.Error
-                Visible: =Parent.DisplayMode=DisplayMode.Edit
-                Width: =Parent.Width - 60
-                X: =30
-                Y: =DataCardValue5.Y + DataCardValue5.Height
-                ZIndex: =3
-
-            StarVisible6 As label:
-                Align: =Align.Center
-                Height: =DataCardKey6.Height
-                Text: ="*"
-                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                Width: =30
-                Wrap: =false
-                Y: =DataCardKey6.Y
-                ZIndex: =4
-
-        "'Product Type ID_DataCard1' As typedDataCard.numberEditCard":
-            BorderStyle: =BorderStyle.Solid
-            DataField: ="Product_x0020_Type_x0020_ID"
-            Default: =ThisItem.'Product Type ID'
-            DisplayMode: =Parent.DisplayMode
-            DisplayName: =DataSourceInfo([@CoffeeMachines],DataSourceInfo.DisplayName,"Product_x0020_Type_x0020_ID")
-            Fill: =RGBA(0, 0, 0, 0)
-            Height: =50
-            Required: =false
-            Update: =Value(DataCardValue6.Text)
-            Width: =172
-            X: =0
-            Y: =2
-            ZIndex: =1
-
-            DataCardKey7 As label:
-                AutoHeight: =true
-                Height: =34
-                Text: =Parent.DisplayName
-                Width: =Parent.Width - 60
-                Wrap: =false
-                X: =30
-                Y: =10
-                ZIndex: =1
-
-            DataCardValue6 As text:
-                BorderColor: =If(IsBlank(Parent.Error), Parent.BorderColor, Color.Red)
-                Default: =Parent.Default
-                DelayOutput: =true
-                DisplayMode: =Parent.DisplayMode
-                Format: =TextFormat.Number
-                PaddingLeft: =5
-                RadiusBottomLeft: =0
-                RadiusBottomRight: =0
-                RadiusTopLeft: =0
-                RadiusTopRight: =0
-                Tooltip: =Parent.DisplayName
-                Width: =Parent.Width - 60
-                X: =30
-                Y: =DataCardKey7.Y + DataCardKey7.Height + 5
-                ZIndex: =2
-
-            ErrorMessage7 As label:
-                AutoHeight: =true
-                Height: =10
-                Live: =Live.Assertive
-                PaddingBottom: =0
-                PaddingLeft: =0
-                PaddingRight: =0
-                PaddingTop: =0
-                Text: =Parent.Error
-                Visible: =Parent.DisplayMode=DisplayMode.Edit
-                Width: =Parent.Width - 60
-                X: =30
-                Y: =DataCardValue6.Y + DataCardValue6.Height
-                ZIndex: =3
-
-            StarVisible7 As label:
-                Align: =Align.Center
-                Height: =DataCardKey7.Height
-                Text: ="*"
-                Visible: =And(Parent.Required, Parent.DisplayMode=DisplayMode.Edit)
-                Width: =30
-                Wrap: =false
-                Y: =DataCardKey7.Y
-                ZIndex: =4
-
         "'Special Feature_DataCard1' As typedDataCard.textualEditCard":
             BorderStyle: =BorderStyle.Solid
             DataField: ="Special_x0020_Feature"
@@ -581,8 +464,8 @@ Screen1 As screen:
             Required: =false
             Update: =DataCardValue7.Text
             Width: =172
-            X: =1
-            Y: =2
+            X: =2
+            Y: =1
             ZIndex: =1
 
             DataCardKey8 As label:
@@ -649,7 +532,7 @@ Screen1 As screen:
             Required: =false
             Update: =DataCardValue8.Text
             Width: =172
-            X: =2
+            X: =0
             Y: =2
             ZIndex: =1
 
@@ -717,8 +600,8 @@ Screen1 As screen:
             Required: =false
             Update: =DataCardValue9.Text
             Width: =172
-            X: =0
-            Y: =3
+            X: =1
+            Y: =2
             ZIndex: =1
 
             DataCardKey10 As label:
@@ -785,8 +668,8 @@ Screen1 As screen:
             Required: =false
             Update: =DataCardValue10.Text
             Width: =172
-            X: =1
-            Y: =3
+            X: =2
+            Y: =2
             ZIndex: =1
 
             DataCardKey11 As label:
@@ -845,8 +728,8 @@ Screen1 As screen:
         OnSelect: =falseSubmitForm(Form1)
         Text: ="Save"
         Width: =127
-        X: =1129
-        Y: =637
+        X: =986
+        Y: =692
         ZIndex: =3
 
     Rectangle2 As rectangle:
@@ -865,4 +748,11 @@ Screen1 As screen:
         X: =160
         Y: =54
         ZIndex: =5
+
+    Button4 As button:
+        OnSelect: =Back()
+        Text: ="Back"
+        X: =1145
+        Y: =692
+        ZIndex: =6
 
